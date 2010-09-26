@@ -5,7 +5,7 @@
 #include <list>
 #include <beaengine/basic_types.h>
 
-#include "unittest/regression/shared_ptr.hpp"
+#include "unittest/util/shared_ptr.hpp"
 
 enum zip_mode_t
   {

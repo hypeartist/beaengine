@@ -20,3 +20,6 @@ compiler.h opflags.h insns.h tables.h tokens.h version.h prn_ins.h
 ) 
 
 add_executable (dasm ${dasm_src} ${dasm_hdr})
+if (BEA_COMPILER STREQUAL gnu)
+set_target_properties (dasm PROPERTIES COMPILE_FLAGS "-w")
+endif ()

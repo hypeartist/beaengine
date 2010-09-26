@@ -71,7 +71,7 @@ static const char *help =
     "   -k avoids disassembling <bytes> bytes from position <start>\n"
     "   -p selects the preferred vendor instruction set (intel, amd, cyrix, idt)\n";
 
-static void output_ins(uint32_t, uint8_t *, int, char *);
+static void output_ins(uint32_t, uint8_t *, int, char *, struct insn*);
 static void skip(uint32_t dist, FILE * fp);
 
 static void ndisasm_verror(int severity, const char *fmt, va_list va)

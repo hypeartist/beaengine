@@ -4,7 +4,7 @@
 #include <list>
 #include <string>
 #include <beaengine/BeaEngine.h>
-#include "unittest/regression/table_reader.hpp"
+#include "unittest/util/table_reader.hpp"
 
 struct dasm_result_entry_s
 {

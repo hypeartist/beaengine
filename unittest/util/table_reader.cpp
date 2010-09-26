@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <ctype.h>
 
-#include "unittest/regression/table_reader.hpp"
+#include "unittest/util/table_reader.hpp"
 
 static std::runtime_error raise (const char* text, int line)
 {

@@ -15,10 +15,10 @@
 
 #include <beaengine/BeaEngine.h>
 
-#include "unittest/regression/table_reader.hpp"
+#include "unittest/util/table_reader.hpp"
 #include "unittest/regression/dasm_sexp.hpp"
 #include "unittest/regression/dasm_result.hpp"
-#include "unittest/regression/Timer.h"
+#include "unittest/util/Timer.h"
 #include "unittest/regression/zip_archive.hpp"
 #include "unittest/regression/cmd_line.hpp"
 #include "unittest/regression/temp_path.hpp"
