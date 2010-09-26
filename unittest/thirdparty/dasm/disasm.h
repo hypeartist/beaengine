@@ -38,10 +38,16 @@
 #ifndef NASM_DISASM_H
 #define NASM_DISASM_H
 
+
+
 #define INSN_MAX 32             /* one instruction can't be longer than this */
 
 int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
             int32_t offset, int autosync, uint32_t prefer);
+
 int32_t eatbyte(uint8_t *data, char *output, int outbufsize, int segsize);
+
+int32_t disasm2(uint8_t *data, char *output, int outbufsize, int segsize,
+            int32_t offset, int autosync, uint32_t prefer, struct insn* ins);
 
 #endif

@@ -5,7 +5,8 @@
 
 #include "nasm.h"
 
-extern void print_ins (FILE* f, struct insn* insn, char* orig);
+extern void print_ins (FILE* f, struct insn* insn, char* orig, uint8_t *data,
+                       int datalen);
 
 
 #endif

@@ -55,6 +55,8 @@
 #include "sync.h"
 #include "disasm.h"
 
+#include "prn_ins.h"
+
 #define BPL 8                   /* bytes per line of hex dump */
 
 static const char *help =
@@ -96,6 +98,8 @@ int main(int argc, char **argv)
     bool rn_error;
     int32_t offset;
     FILE *fp;
+
+	struct insn ins;
 
     tolower_init();
     nasm_set_verror(ndisasm_verror);
@@ -313,14 +317,15 @@ int main(int argc, char **argv)
             nextsync = next_sync(offset, &synclen);
         }
         while (p > q && (p - q >= INSN_MAX || lenread == 0)) {
+			memset (&ins, 0, sizeof (ins));
             lendis =
-                disasm((uint8_t *) q, outbuf, sizeof(outbuf), bits,
-		       offset, autosync, prefer);
+                disasm2 ((uint8_t *) q, outbuf, sizeof(outbuf), bits,
+		       offset, autosync, prefer, &ins);
             if (!lendis || lendis > (p - q)
                 || ((nextsync || synclen) &&
 		    (uint32_t)lendis > nextsync - offset))
                 lendis = eatbyte((uint8_t *) q, outbuf, sizeof(outbuf), bits);
-            output_ins(offset, (uint8_t *) q, lendis, outbuf);
+            output_ins(offset, (uint8_t *) q, lendis, outbuf, &ins);
             q += lendis;
             offset += lendis;
         }
@@ -340,10 +345,19 @@ int main(int argc, char **argv)
     return 0;
 }
 
+
+
 static void output_ins(uint32_t offset, uint8_t *data,
-                       int datalen, char *insn)
+                       int datalen, char *insn, struct insn* ins)
 {
+	
+
     int bytes;
+	if (ins)
+	{
+		print_ins (stdout, ins, insn, data, datalen);
+		return;
+	}
     fprintf(stdout, "%08"PRIX32"  ", offset);
 
     bytes = 0;

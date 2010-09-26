@@ -995,8 +995,10 @@ static const char * const condition_name[16] = {
     "s", "ns", "pe", "po", "l", "nl", "ng", "g"
 };
 
-int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
-            int32_t offset, int autosync, uint32_t prefer)
+
+
+int32_t disasm2(uint8_t *data, char *output, int outbufsize, int segsize,
+            int32_t offset, int autosync, uint32_t prefer, struct insn* ins)
 {
     const struct itemplate * const *p, * const *best_p;
     const struct disasm_index *ix;
@@ -1006,13 +1008,14 @@ int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
     int i, slen, colon, n;
     uint8_t *origdata;
     int works;
-    insn tmp_ins, ins;
+    insn tmp_ins;
     uint32_t goodness, best;
     int best_pref;
     struct prefix_info prefix;
     bool end_prefix;
 
-    memset(&ins, 0, sizeof ins);
+    memset(ins, 0, sizeof ins);
+	memset(&tmp_ins, 0, sizeof (struct insn));
 
     /*
      * Scan for prefixes.
@@ -1215,7 +1218,7 @@ int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
                     best_p = p;
 		    best_pref = nprefix;
                     best_length = length;
-                    ins = tmp_ins;
+                    *ins = tmp_ins;
                 }
             }
         }
@@ -1238,7 +1241,7 @@ int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
      *      be used for that purpose.
      */
     for (i = 0; i < MAXPREFIX; i++) {
-	const char *prefix = prefix_name(ins.prefixes[i]);
+	const char *prefix = prefix_name(ins->prefixes[i]);
 	if (prefix)
 	    slen += my_snprintf(output+slen, outbufsize-slen, "%s ", prefix);
     }
@@ -1246,7 +1249,7 @@ int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
     i = (*p)->opcode;
     if (i >= FIRST_COND_OPCODE)
 	slen += my_snprintf(output + slen, outbufsize - slen, "%s%s",
-			 nasm_insn_names[i], condition_name[ins.condition]);
+			 nasm_insn_names[i], condition_name[ins->condition]);
     else
         slen += my_snprintf(output + slen, outbufsize - slen, "%s",
 			 nasm_insn_names[i]);
@@ -1255,11 +1258,11 @@ int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
     length += data - origdata;  /* fix up for prefixes */
     for (i = 0; i < (*p)->operands; i++) {
 	opflags_t t = (*p)->opd[i];
-	const operand *o = &ins.oprs[i];
+	const operand *o = &ins->oprs[i];
 	int64_t offs;
 
 	if (t & SAME_AS) {
-	    o = &ins.oprs[t & ~SAME_AS];
+	    o = &ins->oprs[t & ~SAME_AS];
 	    t = (*p)->opd[t & ~SAME_AS];
 	}
 
@@ -1291,7 +1294,7 @@ int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
         if ((t & (REGISTER | FPUREG)) ||
             (o->segment & SEG_RMREG)) {
 	    enum reg_enum reg;
-            reg = whichreg(t, o->basereg, ins.rex);
+            reg = whichreg(t, o->basereg, ins->rex);
             if (t & TO)
                 slen += my_snprintf(output + slen, outbufsize - slen, "to ");
             slen += my_snprintf(output + slen, outbufsize - slen, "%s",
@@ -1551,4 +1554,11 @@ int32_t eatbyte(uint8_t *data, char *output, int outbufsize, int segsize)
 	my_snprintf(output, outbufsize, "%s", str);
 
     return 1;
+}
+
+int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
+            int32_t offset, int autosync, uint32_t prefer)
+{
+	insn ins;
+	return disasm2 (data, output, outbufsize, segsize, offset, autosync, prefer, &ins);
 }

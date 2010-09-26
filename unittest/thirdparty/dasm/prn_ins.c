@@ -118,6 +118,10 @@ void print_operands (FILE* f, struct insn* insn)
 
 void print_eop (FILE* f, struct extop* x, int idx)
 {
+if (x->type == EOT_NOTHING)
+{
+	return;
+}
   fprintf (f, "<eop index = \"%d\">\n", idx);
   fprintf (f, "<stringval value=\"%s\"/>\n", x->stringval);
   fprintf (f, "<offset value=\"%lld\"/>\n", x->offset);
@@ -146,11 +150,20 @@ void print_eops (FILE* f, struct insn* insn)
 
 #define PRN_FLD(X) fprintf (f, "<%s value=\"%d\"/>\n", #X, insn->X)
 
-void print_ins (FILE* f, struct insn* insn, char* orig)
+void print_ins (FILE* f, struct insn* insn, char* orig, uint8_t *data,
+                       int datalen)
 {
 	int i=0;
 	fprintf (f, "<instruction>\n");
 	fprintf (f, "<assembly>%s</assembly>\n", orig);
+	fprintf (f, "<opcode>\n");
+	i = 0;
+	while (datalen > 0) {
+        fprintf(f, "<byte value=\"%02X\" index=\"%d\"/>\n", *data++, i++);
+        datalen--;
+    }
+	i = 0;
+	fprintf (f, "</opcode>\n");
 	print_prefixes (f, insn);
 	print_opcode (f, insn);
 	print_ccode (f, insn);
