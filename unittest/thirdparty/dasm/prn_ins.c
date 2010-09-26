@@ -1,64 +1,4 @@
-/* ----------------------------------------------------------------------- *
- *
- *   Copyright 1996-2010 The NASM Authors - All Rights Reserved
- *   See the file AUTHORS included with the NASM distribution for
- *   the specific copyright holders.
- *
- *   Redistribution and use in source and binary forms, with or without
- *   modification, are permitted provided that the following
- *   conditions are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above
- *     copyright notice, this list of conditions and the following
- *     disclaimer in the documentation and/or other materials provided
- *     with the distribution.
- *
- *     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
- *     CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
- *     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- *     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
- *     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- *     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- *     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- *     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- *     HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- *     CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- *     OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- *     EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * ----------------------------------------------------------------------- */
-
-/*
- * The Netwide Assembler main program module
- */
-
-#include "compiler.h"
-
-#include <stdio.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <inttypes.h>
-#include <limits.h>
-#include <time.h>
-
-#include "nasm.h"
-#include "nasmlib.h"
-
-
-void dummy(char *label, int32_t segment, int64_t offset,
-		  char *special, bool is_norm, bool isextrn)
-{
-
-}
-
-
-extern void parser_global_info(struct location * locp);
-
+#include "prn_ins.h"
 
 #define PRN_PREFIX(X) fprintf (f, "</prefix value=\"%s\">\n", #X); break
 
@@ -206,7 +146,7 @@ void print_eops (FILE* f, struct insn* insn)
 
 #define PRN_FLD(X) fprintf (f, "<%s value=\"%d\"/>\n", #X, insn->X)
 
-void debug_instruction (FILE* f, struct insn* insn, char* orig)
+void print_ins (FILE* f, struct insn* insn, char* orig)
 {
 	int i=0;
 	fprintf (f, "<instruction>\n");
@@ -226,44 +166,3 @@ void debug_instruction (FILE* f, struct insn* insn, char* orig)
 	fprintf (f, "</instruction>\n");
 }
 
-
-void do_parse (char* line, FILE* f)
-{
-  int pass1 = 0;
-  struct insn instruction;
-  struct location loc;
-  loc.known = 1;
-  loc.segment = 0xFF;
-  loc.offset = 0xAA;
-  parser_global_info (&loc);
-  parse_line(pass1, line, &instruction, dummy);
-  debug_instruction (f, &instruction, line);
-}
-
-int main_parse (int argc, char* argv [])
-{
-  do_parse (argv [1], stdout);
-  return 0;
-}
-
-
-int main (int argc, char* argv [])
-{
-  tolower_init ();
-  //return main_nasm (argc, argv);
-  return main_parse (argc, argv);
-}
-
-
-int pass0 = 0, passn;
-bool tasm_compatible_mode = false;
-int64_t global_offset_changed = 0;
-int in_abs_seg = 0;
-int optimizing = 0;
-
-int32_t abs_seg = 1;
-int32_t abs_offset = 1;
-
-int globalrel = 1;           /* default to relative addressing? */
-int maxbits = 256;             /* max bits supported by output */
-struct ofmt *ofmt = 0;
