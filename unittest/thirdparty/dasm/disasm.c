@@ -40,7 +40,16 @@
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
+#ifndef _MSC_VER
 #include <inttypes.h>
+#else
+#include "ms_inttypes.h"
+#endif
+#if defined (_MSC_VER)
+  #define my_snprintf _snprintf 
+#else
+#define my_snprintf snprintf 
+#endif
 
 #include "nasm.h"
 #include "disasm.h"
@@ -48,6 +57,8 @@
 #include "insns.h"
 #include "tables.h"
 #include "regdis.h"
+
+
 
 /*
  * Flags that go into the `segment' field of `insn' structures
@@ -1219,25 +1230,25 @@ int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
 
     slen = 0;
 
-    /* TODO: snprintf returns the value that the string would have if
+    /* TODO: my_snprintf returns the value that the string would have if
      *      the buffer were long enough, and not the actual length of
      *      the returned string, so each instance of using the return
-     *      value of snprintf should actually be checked to assure that
+     *      value of my_snprintf should actually be checked to assure that
      *      the return value is "sane."  Maybe a macro wrapper could
      *      be used for that purpose.
      */
     for (i = 0; i < MAXPREFIX; i++) {
 	const char *prefix = prefix_name(ins.prefixes[i]);
 	if (prefix)
-	    slen += snprintf(output+slen, outbufsize-slen, "%s ", prefix);
+	    slen += my_snprintf(output+slen, outbufsize-slen, "%s ", prefix);
     }
 
     i = (*p)->opcode;
     if (i >= FIRST_COND_OPCODE)
-	slen += snprintf(output + slen, outbufsize - slen, "%s%s",
+	slen += my_snprintf(output + slen, outbufsize - slen, "%s%s",
 			 nasm_insn_names[i], condition_name[ins.condition]);
     else
-        slen += snprintf(output + slen, outbufsize - slen, "%s",
+        slen += my_snprintf(output + slen, outbufsize - slen, "%s",
 			 nasm_insn_names[i]);
 
     colon = false;
@@ -1282,15 +1293,15 @@ int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
 	    enum reg_enum reg;
             reg = whichreg(t, o->basereg, ins.rex);
             if (t & TO)
-                slen += snprintf(output + slen, outbufsize - slen, "to ");
-            slen += snprintf(output + slen, outbufsize - slen, "%s",
+                slen += my_snprintf(output + slen, outbufsize - slen, "to ");
+            slen += my_snprintf(output + slen, outbufsize - slen, "%s",
                              nasm_reg_names[reg-EXPR_REG_START]);
         } else if (!(UNITY & ~t)) {
             output[slen++] = '1';
         } else if (t & IMMEDIATE) {
             if (t & BITS8) {
                 slen +=
-                    snprintf(output + slen, outbufsize - slen, "byte ");
+                    my_snprintf(output + slen, outbufsize - slen, "byte ");
                 if (o->segment & SEG_SIGNED) {
                     if (offs < 0) {
                         offs *= -1;
@@ -1300,26 +1311,26 @@ int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
                 }
             } else if (t & BITS16) {
                 slen +=
-                    snprintf(output + slen, outbufsize - slen, "word ");
+                    my_snprintf(output + slen, outbufsize - slen, "word ");
             } else if (t & BITS32) {
                 slen +=
-                    snprintf(output + slen, outbufsize - slen, "dword ");
+                    my_snprintf(output + slen, outbufsize - slen, "dword ");
             } else if (t & BITS64) {
                 slen +=
-                    snprintf(output + slen, outbufsize - slen, "qword ");
+                    my_snprintf(output + slen, outbufsize - slen, "qword ");
             } else if (t & NEAR) {
                 slen +=
-                    snprintf(output + slen, outbufsize - slen, "near ");
+                    my_snprintf(output + slen, outbufsize - slen, "near ");
             } else if (t & SHORT) {
                 slen +=
-                    snprintf(output + slen, outbufsize - slen, "short ");
+                    my_snprintf(output + slen, outbufsize - slen, "short ");
             }
             slen +=
-                snprintf(output + slen, outbufsize - slen, "0x%"PRIx64"",
+                my_snprintf(output + slen, outbufsize - slen, "0x%"PRIx64"",
                          offs);
         } else if (!(MEM_OFFS & ~t)) {
             slen +=
-                snprintf(output + slen, outbufsize - slen,
+                my_snprintf(output + slen, outbufsize - slen,
 			 "[%s%s%s0x%"PRIx64"]",
                          (segover ? segover : ""),
                          (segover ? ":" : ""),
@@ -1331,58 +1342,58 @@ int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
             int started = false;
             if (t & BITS8)
                 slen +=
-                    snprintf(output + slen, outbufsize - slen, "byte ");
+                    my_snprintf(output + slen, outbufsize - slen, "byte ");
             if (t & BITS16)
                 slen +=
-                    snprintf(output + slen, outbufsize - slen, "word ");
+                    my_snprintf(output + slen, outbufsize - slen, "word ");
             if (t & BITS32)
                 slen +=
-                    snprintf(output + slen, outbufsize - slen, "dword ");
+                    my_snprintf(output + slen, outbufsize - slen, "dword ");
             if (t & BITS64)
                 slen +=
-                    snprintf(output + slen, outbufsize - slen, "qword ");
+                    my_snprintf(output + slen, outbufsize - slen, "qword ");
             if (t & BITS80)
                 slen +=
-                    snprintf(output + slen, outbufsize - slen, "tword ");
+                    my_snprintf(output + slen, outbufsize - slen, "tword ");
             if (t & BITS128)
                 slen +=
-                    snprintf(output + slen, outbufsize - slen, "oword ");
+                    my_snprintf(output + slen, outbufsize - slen, "oword ");
             if (t & BITS256)
                 slen +=
-                    snprintf(output + slen, outbufsize - slen, "yword ");
+                    my_snprintf(output + slen, outbufsize - slen, "yword ");
             if (t & FAR)
-                slen += snprintf(output + slen, outbufsize - slen, "far ");
+                slen += my_snprintf(output + slen, outbufsize - slen, "far ");
             if (t & NEAR)
                 slen +=
-                    snprintf(output + slen, outbufsize - slen, "near ");
+                    my_snprintf(output + slen, outbufsize - slen, "near ");
             output[slen++] = '[';
             if (o->disp_size)
-                slen += snprintf(output + slen, outbufsize - slen, "%s",
+                slen += my_snprintf(output + slen, outbufsize - slen, "%s",
                                  (o->disp_size == 64 ? "qword " :
 				  o->disp_size == 32 ? "dword " :
                                   o->disp_size == 16 ? "word " :
 				  ""));
 	    if (o->eaflags & EAF_REL)
-		slen += snprintf(output + slen, outbufsize - slen, "rel ");
+		slen += my_snprintf(output + slen, outbufsize - slen, "rel ");
             if (segover) {
                 slen +=
-                    snprintf(output + slen, outbufsize - slen, "%s:",
+                    my_snprintf(output + slen, outbufsize - slen, "%s:",
                              segover);
                 segover = NULL;
             }
             if (o->basereg != -1) {
-                slen += snprintf(output + slen, outbufsize - slen, "%s",
+                slen += my_snprintf(output + slen, outbufsize - slen, "%s",
                                  nasm_reg_names[(o->basereg-EXPR_REG_START)]);
                 started = true;
             }
             if (o->indexreg != -1) {
                 if (started)
                     output[slen++] = '+';
-                slen += snprintf(output + slen, outbufsize - slen, "%s",
+                slen += my_snprintf(output + slen, outbufsize - slen, "%s",
                                  nasm_reg_names[(o->indexreg-EXPR_REG_START)]);
                 if (o->scale > 1)
                     slen +=
-                        snprintf(output + slen, outbufsize - slen, "*%d",
+                        my_snprintf(output + slen, outbufsize - slen, "*%d",
                                  o->scale);
                 started = true;
             }
@@ -1398,7 +1409,7 @@ int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
 		    prefix = "+";
 		}
                 slen +=
-                    snprintf(output + slen, outbufsize - slen, "%s0x%"PRIx8"",
+                    my_snprintf(output + slen, outbufsize - slen, "%s0x%"PRIx8"",
 			     prefix, offset);
             } else if (o->segment & SEG_DISP16) {
 		const char *prefix;
@@ -1410,7 +1421,7 @@ int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
 		    prefix = started ? "+" : "";
 		}
                 slen +=
-                    snprintf(output + slen, outbufsize - slen,
+                    my_snprintf(output + slen, outbufsize - slen,
 			     "%s0x%"PRIx16"", prefix, offset);
             } else if (o->segment & SEG_DISP32) {
 		if (prefix.asize == 64) {
@@ -1423,7 +1434,7 @@ int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
 			prefix = started ? "+" : "";
 		    }
 		    slen +=
-			snprintf(output + slen, outbufsize - slen,
+			my_snprintf(output + slen, outbufsize - slen,
 				 "%s0x%"PRIx64"", prefix, offset);
 		} else {
 		    const char *prefix;
@@ -1435,14 +1446,14 @@ int32_t disasm(uint8_t *data, char *output, int outbufsize, int segsize,
 			prefix = started ? "+" : "";
 		    }
 		    slen +=
-			snprintf(output + slen, outbufsize - slen,
+			my_snprintf(output + slen, outbufsize - slen,
 				 "%s0x%"PRIx32"", prefix, offset);
 		}
             }
             output[slen++] = ']';
         } else {
             slen +=
-                snprintf(output + slen, outbufsize - slen, "<operand%d>",
+                my_snprintf(output + slen, outbufsize - slen, "<operand%d>",
                          i);
         }
     }
@@ -1522,7 +1533,7 @@ int32_t eatbyte(uint8_t *data, char *output, int outbufsize, int segsize)
     case REX_P + 0xE:
     case REX_P + 0xF:
 	if (segsize == 64) {
-	    snprintf(output, outbufsize, "rex%s%s%s%s%s",
+	    my_snprintf(output, outbufsize, "rex%s%s%s%s%s",
 		     (byte == REX_P) ? "" : ".",
 		     (byte & REX_W) ? "w" : "",
 		     (byte & REX_R) ? "r" : "",
@@ -1532,12 +1543,12 @@ int32_t eatbyte(uint8_t *data, char *output, int outbufsize, int segsize)
 	}
 	/* else fall through */
     default:
-	snprintf(output, outbufsize, "db 0x%02x", byte);
+	my_snprintf(output, outbufsize, "db 0x%02x", byte);
 	break;
     }
 
     if (str)
-	snprintf(output, outbufsize, "%s", str);
+	my_snprintf(output, outbufsize, "%s", str);
 
     return 1;
 }

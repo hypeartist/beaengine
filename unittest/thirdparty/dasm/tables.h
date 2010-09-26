@@ -41,7 +41,11 @@
 #define NASM_TABLES_H
 
 #include "compiler.h"
+#ifndef _MSC_VER
 #include <inttypes.h>
+#else
+#include "ms_inttypes.h"
+#endif
 #include "insnsi.h"		/* For enum opcode */
 #include "opflags.h"		/* For opflags_t */
 

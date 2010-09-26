@@ -41,7 +41,11 @@
 #include "compiler.h"
 
 #include <stdio.h>
+#ifndef _MSC_VER
 #include <inttypes.h>
+#else
+#include "ms_inttypes.h"
+#endif
 #include "nasmlib.h"
 
 #ifdef NASM_SRC

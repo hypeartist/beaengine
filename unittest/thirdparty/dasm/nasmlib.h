@@ -40,7 +40,12 @@
 
 #include "compiler.h"
 
+#ifndef _MSC_VER
 #include <inttypes.h>
+#else
+#include "ms_inttypes.h"
+#endif
+
 #include <stdio.h>
 #include <string.h>
 #ifdef HAVE_STRINGS_H

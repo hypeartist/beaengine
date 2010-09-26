@@ -43,7 +43,11 @@
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
+#ifndef _MSC_VER
 #include <inttypes.h>
+#else
+#include "ms_inttypes.h"
+#endif
 
 #include "insns.h"
 #include "nasm.h"

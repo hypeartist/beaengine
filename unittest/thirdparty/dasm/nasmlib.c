@@ -41,8 +41,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#ifndef _MSC_VER
 #include <inttypes.h>
-
+#else
+#include "ms_inttypes.h"
+#endif
 #include "nasm.h"
 #include "nasmlib.h"
 #include "insns.h"
