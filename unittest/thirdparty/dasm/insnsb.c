@@ -1,7 +1,7 @@
 /* This file auto-generated from insns.dat by insns.pl - don't edit it */
 
-#include "nasm.h"
-#include "insns.h"
+#include "unittest/thirdparty/dasm/nasm.h"
+#include "unittest/thirdparty/dasm/insns.h"
 
 const uint8_t nasm_bytecodes[19746] = {
     /*     0 */ 0324,0361,03,017,072,027,0101,026,0,

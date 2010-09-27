@@ -3,7 +3,7 @@
 #ifndef NASM_REGDIS_H
 #define NASM_REGDIS_H
 
-#include "regs.h"
+#include "unittest/thirdparty/dasm/regs.h"
 
 extern const enum reg_enum nasm_rd_creg    [16];
 extern const enum reg_enum nasm_rd_dreg    [16];

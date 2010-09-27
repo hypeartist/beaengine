@@ -35,7 +35,7 @@
  * nasmlib.c	library routines for the Netwide Assembler
  */
 
-#include "compiler.h"
+#include "unittest/thirdparty/dasm/compiler.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,11 +44,11 @@
 #ifndef _MSC_VER
 #include <inttypes.h>
 #else
-#include "ms_inttypes.h"
+#include "unittest/thirdparty/dasm/ms_inttypes.h"
 #endif
-#include "nasm.h"
-#include "nasmlib.h"
-#include "insns.h"
+#include "unittest/thirdparty/dasm/nasm.h"
+#include "unittest/thirdparty/dasm/nasmlib.h"
+#include "unittest/thirdparty/dasm/insns.h"
 
 int globalbits = 0;    /* defined in nasm.h, works better here for ASM+DISASM */
 static vefunc nasm_verror;	/* Global error handling function */

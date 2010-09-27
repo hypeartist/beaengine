@@ -38,7 +38,7 @@
 #ifndef NASM_OPFLAGS_H
 #define NASM_OPFLAGS_H
 
-#include "compiler.h"
+#include "unittest/thirdparty/dasm/compiler.h"
 
 /*
  * Here we define the operand types. These are implemented as bit

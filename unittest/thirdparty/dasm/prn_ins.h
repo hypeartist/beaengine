@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#include "nasm.h"
+#include "unittest/thirdparty/dasm/nasm.h"
 
 extern void print_ins (FILE* f, struct insn* insn, char* orig, uint8_t *data,
                        int datalen);

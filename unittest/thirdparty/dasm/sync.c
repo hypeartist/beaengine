@@ -35,7 +35,7 @@
  * sync.c   the Netwide Disassembler synchronisation processing module
  */
 
-#include "compiler.h"
+#include "unittest/thirdparty/dasm/compiler.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -43,11 +43,11 @@
 #ifndef _MSC_VER
 #include <inttypes.h>
 #else
-#include "ms_inttypes.h"
+#include "unittest/thirdparty/dasm/ms_inttypes.h"
 #endif
 
-#include "nasmlib.h"
-#include "sync.h"
+#include "unittest/thirdparty/dasm/nasmlib.h"
+#include "unittest/thirdparty/dasm/sync.h"
 
 #define SYNC_MAX_SHIFT          31
 #define SYNC_MAX_SIZE           (1U << SYNC_MAX_SHIFT)

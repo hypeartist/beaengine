@@ -1,6 +1,6 @@
 /* automatically generated from ./regs.dat - do not edit */
 
-#include "regdis.h"
+#include "unittest/thirdparty/dasm/regdis.h"
 
 const enum reg_enum nasm_rd_creg    [16] = {R_CR0,R_CR1,R_CR2,R_CR3,R_CR4,R_CR5,R_CR6,R_CR7,R_CR8,R_CR9,R_CR10,R_CR11,R_CR12,R_CR13,R_CR14,R_CR15};
 const enum reg_enum nasm_rd_dreg    [16] = {R_DR0,R_DR1,R_DR2,R_DR3,R_DR4,R_DR5,R_DR6,R_DR7,R_DR8,R_DR9,R_DR10,R_DR11,R_DR12,R_DR13,R_DR14,R_DR15};

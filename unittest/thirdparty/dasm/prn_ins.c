@@ -1,4 +1,4 @@
-#include "prn_ins.h"
+#include "unittest/thirdparty/dasm/prn_ins.h"
 
 #define PRN_PREFIX(X) fprintf (f, "</prefix value=\"%s\">\n", #X); break
 
@@ -39,7 +39,7 @@ void print_opcode (FILE* f, struct insn* insn)
 {
   switch (insn->opcode)
     {
-      #include "my_opc.h"
+      #include "unittest/thirdparty/dasm/my_opc.h"
     }
 }
 #define PRN_CCODE(X)  fprintf (f, "</condition value=\"%s\">\n", #X); break
@@ -47,7 +47,7 @@ void print_ccode (FILE* f, struct insn* insn)
 {
   switch (insn->condition)
     {
-      #include "my_ccode.h"
+      #include "unittest/thirdparty/dasm/my_ccode.h"
     default: PRN_CCODE(UNDEFINED);
     }
 }
@@ -60,7 +60,7 @@ void print_reg (FILE* f, char* name, enum reg_enum r)
 {
   switch (r)
     {
-      #include "my_regs.h"
+      #include "unittest/thirdparty/dasm/my_regs.h"
     }
 }
 

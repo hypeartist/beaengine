@@ -38,28 +38,28 @@
 #ifndef NASM_NASM_H
 #define NASM_NASM_H
 
-#include "compiler.h"
+#include "unittest/thirdparty/dasm/compiler.h"
 
 #include <stdio.h>
 #ifndef _MSC_VER
 #include <inttypes.h>
 #else
-#include "ms_inttypes.h"
+#include "unittest/thirdparty/dasm/ms_inttypes.h"
 #endif
-#include "nasmlib.h"
+#include "unittest/thirdparty/dasm/nasmlib.h"
 
 #ifdef NASM_SRC
-#include "preproc.h"
+#include "unittest/thirdparty/dasm/preproc.h"
 #endif
 
-#include "insnsi.h"		/* For enum opcode */
+#include "unittest/thirdparty/dasm/insnsi.h"		/* For enum opcode */
 
 #ifdef NASM_SRC
-#include "directiv.h"		/* For enum directive */
+#include "unittest/thirdparty/dasm/directiv.h"		/* For enum directive */
 #endif
 
-#include "opflags.h"
-#include "regs.h"
+#include "unittest/thirdparty/dasm/opflags.h"
+#include "unittest/thirdparty/dasm/regs.h"
 
 #define NO_SEG -1L              /* null segment value */
 #define SEG_ABS 0x40000000L     /* mask for far-absolute segments */

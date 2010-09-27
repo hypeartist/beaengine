@@ -40,14 +40,14 @@
 #ifndef NASM_TABLES_H
 #define NASM_TABLES_H
 
-#include "compiler.h"
+#include "unittest/thirdparty/dasm/compiler.h"
 #ifndef _MSC_VER
 #include <inttypes.h>
 #else
-#include "ms_inttypes.h"
+#include "unittest/thirdparty/dasm/ms_inttypes.h"
 #endif
-#include "insnsi.h"		/* For enum opcode */
-#include "opflags.h"		/* For opflags_t */
+#include "unittest/thirdparty/dasm/insnsi.h"		/* For enum opcode */
+#include "unittest/thirdparty/dasm/opflags.h"		/* For opflags_t */
 
 /* --- From standard.mac via macros.pl: --- */
 

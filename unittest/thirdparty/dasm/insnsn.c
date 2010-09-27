@@ -1,6 +1,6 @@
 /* This file is auto-generated from insns.dat by insns.pl - don't edit it */
 
-#include "tables.h"
+#include "unittest/thirdparty/dasm/tables.h"
 
 const char * const nasm_insn_names[] = {
 	"aaa",

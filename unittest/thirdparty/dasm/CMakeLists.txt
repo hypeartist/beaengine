@@ -1,6 +1,5 @@
 set (dasm_src
 nasmlib.c
-ndisasm.c
 disasm.c
 insnsd.c 
 insnsb.c 
@@ -19,7 +18,12 @@ insnsi.h  nasmlib.h  regdis.h  regs.h  sync.h disasm.h nasm.h
 compiler.h opflags.h insns.h tables.h tokens.h version.h prn_ins.h
 ) 
 
-add_executable (dasm ${dasm_src} ${dasm_hdr})
+add_library (micro_dasm STATIC ${dasm_src} ${dasm_hdr})
+
+add_executable (ndisasm ndisasm.c)
+target_link_libraries (ndisasm micro_dasm)
+
 if (BEA_COMPILER STREQUAL gnu)
-set_target_properties (dasm PROPERTIES COMPILE_FLAGS "-w")
+set_target_properties (micro_dasm PROPERTIES COMPILE_FLAGS "-w")
+set_target_properties (ndisasm PROPERTIES COMPILE_FLAGS "-w")
 endif ()

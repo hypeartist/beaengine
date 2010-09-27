@@ -1,7 +1,7 @@
 /* This file auto-generated from insns.dat by insns.pl - don't edit it */
 
-#include "nasm.h"
-#include "insns.h"
+#include "unittest/thirdparty/dasm/nasm.h"
+#include "unittest/thirdparty/dasm/insns.h"
 
 static const struct itemplate instrux[] = {
     /*    0 */ {I_RESB, 1, {IMMEDIATE,0,0,0,0}, nasm_bytecodes+18790, IF_8086},

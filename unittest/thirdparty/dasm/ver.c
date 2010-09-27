@@ -31,8 +31,8 @@
  *
  * ----------------------------------------------------------------------- */
 
-#include "nasm.h"
-#include "version.h"
+#include "unittest/thirdparty/dasm/nasm.h"
+#include "unittest/thirdparty/dasm/version.h"
 
 /* This is printed when entering nasm -v */
 const char nasm_version[] = NASM_VER;

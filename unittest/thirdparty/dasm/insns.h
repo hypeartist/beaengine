@@ -9,8 +9,8 @@
 #ifndef NASM_INSNS_H
 #define NASM_INSNS_H
 
-#include "nasm.h"
-#include "tokens.h"
+#include "unittest/thirdparty/dasm/nasm.h"
+#include "unittest/thirdparty/dasm/tokens.h"
 
 struct itemplate {
     enum opcode opcode;		/* the token, passed from "parser.c" */

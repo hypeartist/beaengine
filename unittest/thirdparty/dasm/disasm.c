@@ -35,7 +35,7 @@
  * disasm.c   where all the _work_ gets done in the Netwide Disassembler
  */
 
-#include "compiler.h"
+#include "unittest/thirdparty/dasm/compiler.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -43,7 +43,7 @@
 #ifndef _MSC_VER
 #include <inttypes.h>
 #else
-#include "ms_inttypes.h"
+#include "unittest/thirdparty/dasm/ms_inttypes.h"
 #endif
 #if defined (_MSC_VER)
   #define my_snprintf _snprintf 
@@ -51,12 +51,12 @@
 #define my_snprintf snprintf 
 #endif
 
-#include "nasm.h"
-#include "disasm.h"
-#include "sync.h"
-#include "insns.h"
-#include "tables.h"
-#include "regdis.h"
+#include "unittest/thirdparty/dasm/nasm.h"
+#include "unittest/thirdparty/dasm/disasm.h"
+#include "unittest/thirdparty/dasm/sync.h"
+#include "unittest/thirdparty/dasm/insns.h"
+#include "unittest/thirdparty/dasm/tables.h"
+#include "unittest/thirdparty/dasm/regdis.h"
 
 
 

@@ -1,6 +1,6 @@
 /* automatically generated from ./regs.dat - do not edit */
 
-#include "tables.h"
+#include "unittest/thirdparty/dasm/tables.h"
 
 const char * const nasm_reg_names[] = {
     "ah",
