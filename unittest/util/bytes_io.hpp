@@ -7,4 +7,7 @@ std::string print_bytes (unsigned char* code,
 			 size_t length, 
 			 bool use_hex_id = true);
 
+std::string print_bytes_array (unsigned char* code, 
+			       size_t length);
+
 #endif

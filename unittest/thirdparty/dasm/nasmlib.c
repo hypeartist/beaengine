@@ -810,3 +810,59 @@ int idata_bytes(int opcode)
     }
     return ret;
 }
+
+
+bool overflow_general(int64_t value, int bytes)
+{
+    int sbit;
+    int64_t vmax, vmin;
+
+    if (bytes >= 8)
+        return false;
+
+    sbit = (bytes << 3) - 1;
+    vmax =  ((int64_t)2 << sbit) - 1;
+    vmin = -((int64_t)1 << sbit);
+
+    return value < vmin || value > vmax;
+}
+
+bool overflow_signed(int64_t value, int bytes)
+{
+    int sbit;
+    int64_t vmax, vmin;
+
+    if (bytes >= 8)
+        return false;
+
+    sbit = (bytes << 3) - 1;
+    vmax =  ((int64_t)1 << sbit) - 1;
+    vmin = -((int64_t)1 << sbit);
+
+    return value < vmin || value > vmax;
+}
+
+bool overflow_unsigned(int64_t value, int bytes)
+{
+    int sbit;
+    int64_t vmax, vmin;
+
+    if (bytes >= 8)
+        return false;
+
+    sbit = (bytes << 3) - 1;
+    vmax = ((int64_t)2 << sbit) - 1;
+    vmin = 0;
+
+    return value < vmin || value > vmax;
+}
+
+int64_t signed_bits(int64_t value, int bits)
+{
+    if (bits < 64) {
+        value &= ((int64_t)1 << bits) - 1;
+        if (value & (int64_t)1 << (bits - 1))
+            value |= (int64_t)-1 << bits;
+    }
+    return value;
+}

@@ -52,16 +52,21 @@ public:
    * returns the number of line in table file of this instruction
    */
   unsigned int line_number () const;
+
+  // 0, 16, 32, 64. 0 = undefined
+  unsigned int arch () const;
 private:
   /**
    * this constructor parses the raw input line.
    */
-  table_item_c (const char* table_line, unsigned int line_num);
+  table_item_c (const char* table_line, 
+		unsigned int line_num);
 private:
   unsigned char* m_opcode;	/**< opcode bytes */
   size_t         m_length;	/**< length of the opcode bytes */
   std::string    m_mnemonics;	/**< mnemonics */
   unsigned int   m_line_num;
+  unsigned int   m_arch;
 };
 
 /**

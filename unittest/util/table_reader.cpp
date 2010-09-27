@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 
 #include "unittest/util/table_reader.hpp"
@@ -40,7 +40,9 @@ static std::runtime_error raise (const char* text, const char* text2)
 table_item_c::table_item_c (const table_item_c& item)
   : m_opcode    (0),
     m_length    (item.m_length),
-    m_mnemonics (item.m_mnemonics)
+    m_mnemonics (item.m_mnemonics),
+    m_line_num  (item.m_line_num),
+    m_arch      (item.m_arch)
 {
   if (m_length > 0 && item.m_opcode)
     {
@@ -60,6 +62,8 @@ table_item_c& table_item_c::operator = (const table_item_c& item)
 	}
       m_length    = item.m_length;
       m_mnemonics = item.m_mnemonics;
+      m_line_num  = item.m_line_num;
+      m_arch      = item.m_arch;
       if (m_length && item.m_opcode)
 	{
 	  m_opcode = new unsigned char [m_length];
@@ -95,6 +99,11 @@ std::string table_item_c::mnemonics () const
 unsigned int table_item_c::line_number () const
 {
   return m_line_num;
+}
+// ----------------------------------------------------------------------
+unsigned int table_item_c::arch () const
+{
+  return m_arch;
 }
 // ----------------------------------------------------------------------
 table_item_c::table_item_c (const char* table_line, unsigned int line_num)
@@ -179,7 +188,51 @@ table_item_c::table_item_c (const char* table_line, unsigned int line_num)
       throw raise ("opcode always consists of even number of hexdigits",
 		   line_num);
     }
-  m_mnemonics = std::string (table_line + start_of_mnem, len - start_of_mnem);
+  std::string rest = std::string (table_line + start_of_mnem, len - start_of_mnem);
+  size_t lpos = rest.find ('(');
+  size_t rpos = rest.find (')');
+  m_arch = 0;
+
+  if ((lpos != std::string::npos) && (rpos != std::string::npos))
+    {
+      
+      const std::string data = 
+	std::string (rest.c_str () + lpos + 1, rest.c_str () + rpos);
+      
+      bool all_digit = true;
+      for (size_t k=0; k<data.length (); k++)
+	{
+	  if (!isdigit (data [k]))
+	    {
+	      all_digit = false;
+	      break;
+	    }
+	}
+
+      if (all_digit)
+	{
+	  int temp_arch = atoi (data.c_str ());
+	  switch (temp_arch)
+	    {
+	    case 16:
+	    case 32:
+	    case 64:
+	      m_arch = temp_arch;
+	      break;
+	    default:
+	      m_arch = 0;
+	    }
+	}
+      
+    }
+  if (m_arch == 0)
+    {
+      m_mnemonics = rest;
+    }
+  else
+    {
+      m_mnemonics = std::string (rest.c_str () + rpos + 1);
+    }
   m_length = m_length / 2;
   m_opcode = new unsigned char [m_length];
 

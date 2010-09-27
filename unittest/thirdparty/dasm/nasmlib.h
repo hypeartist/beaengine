@@ -407,60 +407,15 @@ const char *prefix_name(int);
 extern const uint8_t zero_buffer[ZERO_BUF_SIZE];
 size_t fwritezero(size_t bytes, FILE *fp);
 
-static inline bool overflow_general(int64_t value, int bytes)
-{
-    int sbit;
-    int64_t vmax, vmin;
 
-    if (bytes >= 8)
-        return false;
+bool overflow_general(int64_t value, int bytes);
 
-    sbit = (bytes << 3) - 1;
-    vmax =  ((int64_t)2 << sbit) - 1;
-    vmin = -((int64_t)1 << sbit);
+bool overflow_signed(int64_t value, int bytes);
 
-    return value < vmin || value > vmax;
-}
+bool overflow_unsigned(int64_t value, int bytes);
 
-static inline bool overflow_signed(int64_t value, int bytes)
-{
-    int sbit;
-    int64_t vmax, vmin;
+int64_t signed_bits(int64_t value, int bits);
 
-    if (bytes >= 8)
-        return false;
-
-    sbit = (bytes << 3) - 1;
-    vmax =  ((int64_t)1 << sbit) - 1;
-    vmin = -((int64_t)1 << sbit);
-
-    return value < vmin || value > vmax;
-}
-
-static inline bool overflow_unsigned(int64_t value, int bytes)
-{
-    int sbit;
-    int64_t vmax, vmin;
-
-    if (bytes >= 8)
-        return false;
-
-    sbit = (bytes << 3) - 1;
-    vmax = ((int64_t)2 << sbit) - 1;
-    vmin = 0;
-
-    return value < vmin || value > vmax;
-}
-
-static inline int64_t signed_bits(int64_t value, int bits)
-{
-    if (bits < 64) {
-        value &= ((int64_t)1 << bits) - 1;
-        if (value & (int64_t)1 << (bits - 1))
-            value |= (int64_t)-1 << bits;
-    }
-    return value;
-}
 
 int idata_bytes(int opcode);
 

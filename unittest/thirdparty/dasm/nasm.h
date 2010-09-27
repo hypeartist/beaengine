@@ -117,7 +117,7 @@ enum out_type {
     OUT_REL1ADR,		/* 1-byte relative address */
     OUT_REL2ADR,		/* 2-byte relative address */
     OUT_REL4ADR,		/* 4-byte relative address */
-    OUT_REL8ADR,		/* 8-byte relative address */
+    OUT_REL8ADR 		/* 8-byte relative address */
 };
 
 /*
@@ -231,7 +231,7 @@ enum token_type {		/* token types, other than chars */
     TOKEN_DBL_AND, TOKEN_DBL_OR, TOKEN_DBL_XOR, /* &&, || and ^^ */
     TOKEN_SEG, TOKEN_WRT,       /* SEG and WRT */
     TOKEN_FLOATIZE,		/* __floatX__ */
-    TOKEN_STRFUNC,		/* __utf16__, __utf32__ */
+    TOKEN_STRFUNC		/* __utf16__, __utf32__ */
 };
 
 enum floatize {
@@ -242,13 +242,13 @@ enum floatize {
     FLOAT_80M,
     FLOAT_80E,
     FLOAT_128L,
-    FLOAT_128H,
+    FLOAT_128H
 };
 
 /* Must match the list in string_transform(), in strfunc.c */
 enum strfunc {
     STRFUNC_UTF16,
-    STRFUNC_UTF32,
+    STRFUNC_UTF32
 };
 
 size_t string_transform(char *, size_t, char **, enum strfunc);
@@ -487,7 +487,7 @@ enum extop_type {		/* extended operand types */
     EOT_NOTHING,
     EOT_DB_STRING,		/* Byte string */
     EOT_DB_STRING_FREE,		/* Byte string which should be nasm_free'd*/
-    EOT_DB_NUMBER,		/* Integer */
+    EOT_DB_NUMBER		/* Integer */
 };
 
 enum ea_flags {			/* special EA flags */
