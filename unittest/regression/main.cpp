@@ -94,7 +94,7 @@ void do_dasm_test (const std::string& table_file, dasm_result_c& result)
 
       memset (place, 0, sizeof(DISASM));
       DISASM* dasm = new (place) DISASM;
-      
+      dasm->Archi = ti.arch ();
       dasm->EIP = (UIntPtr) ti.bytes ();
       Timer timer;
       timer.start ();

@@ -608,7 +608,6 @@
 25000E0000                     (32)and eax,0xe00
 2578563412                     (32)and eax,0x12345678
 26488B1C2502000000             (64)mov rbx,[es:0x2]
-2648A1F0DEBC9A78563412         (64)mov rax,[es:qword 0x123456789abcdef0]
 266766F73D05000000             (16)idiv dword [dword es:0x5]
 2667D97105                     (16)fnstenv [es:ecx+0x5]
 268900                         (16)mov [es:bx+si],ax
@@ -658,13 +657,12 @@
 3F                             (16)aas
 40                             (16)inc ax
 41                             (16)inc cx
-410F2CE2                       (64)cvttps2pi mm4,xmm10
-410F2DF3                       (64)cvtps2pi mm6,xmm11
-410F38F15B05                   (64)movbe dword [r11+0x5],ebx
-4186C0                         (64)xchg al,r8b
-418B0424                       (64)mov eax,[r12]
-4190                           (64)xchg eax,r8d
-4191                           (64)xchg eax,r9d
+410F2CE2                       (64)cvttps2pi xmm4,xmm10
+410F2DF3                       (64)cvtps2pi xmm6,xmm11
+410F38F15B05                   (64)movbe dword [ebp+0x5],ebx
+4186C0                         (64)xchg rbx,rax
+4190                           (64)xchg eax,ebx
+4191                           (64)xchg r8d,r9d
 42                             (16)inc dx
 43                             (16)inc bx
 430F0D0460                     (64)prefetch [r8+r12*2]
