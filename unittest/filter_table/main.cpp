@@ -38,6 +38,14 @@ bool do_dasm (const table_item_c& ti,
   unsigned char* q = ti.bytes ();
   size_t qlen = ti.length ();
   char outbuf [128];
+
+  if (bits_mode == 0)
+    {
+      if (ti.arch () > 0)
+	{
+	  bits_mode = ti.arch ();
+	}
+    }
   
   if (bits_mode == 0)
     {
@@ -71,10 +79,7 @@ bool do_dasm (const table_item_c& ti,
 	}
       if (bits_mode != 0)
 	{
-	  char ebuff [1024];
-	  my_snprintf (ebuff, 1024, "Inconsistent bits mode for line %d",
-		       ti.line_number ());
-	  throw std::runtime_error (ebuff);
+	  return false;
 	}
       if (bits == 64)
 	{
