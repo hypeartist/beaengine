@@ -1,5 +1,4 @@
-BITS 16
-
+BITS 32
 add [bx+si],al
 add [bx+si],ax
 add ax,bx
@@ -1541,14 +1540,12 @@ dppd xmm1,[eax],0x5
 mpsadbw xmm1,[eax],0x5
 pclmullqlqdq xmm1,oword [eax]
 pclmulhqlqdq xmm1,oword [eax]
-
 pclmullqhqdq xmm1,oword [eax]
 pclmulhqhqdq xmm1,oword [eax]
 pcmpestrm xmm1,[eax],0x5
 pcmpestri xmm1,[eax],0x5
 pcmpistrm xmm1,[eax],0x5
 pcmpistri xmm1,[eax],0x5
-
 sqrtpd xmm1,[eax]
 sqrtpd xmm1,[ebx]
 andpd xmm1,[eax]
@@ -2059,7 +2056,6 @@ vpcmpeqw xmm1,xmm2,oword [eax]
 vpcmpeqd xmm1,xmm2,oword [eax]
 vhaddpd xmm1,xmm2,oword [eax]
 vhsubpd xmm1,xmm2,oword [eax]
-
 vpsrlw xmm1,xmm2,oword [eax]
 vpsrld xmm1,xmm2,oword [eax]
 vpsrlq xmm1,xmm2,oword [eax]
@@ -2111,7 +2107,6 @@ vsubss xmm1,xmm2,dword [eax]
 vminss xmm1,xmm2,dword [eax]
 vdivss xmm1,xmm2,dword [eax]
 vmaxss xmm1,xmm2,dword [eax]
-
 vcvtsi2sd xmm1,xmm2,dword [eax]
 vsqrtsd xmm1,xmm2,qword [eax]
 vaddsd xmm1,xmm2,qword [eax]
@@ -2123,7 +2118,6 @@ vdivsd xmm1,xmm2,qword [eax]
 vmaxsd xmm1,xmm2,qword [eax]
 vhaddps xmm1,xmm2,oword [eax]
 vhsubps xmm1,xmm2,oword [eax]
-
 vaddsubps xmm1,xmm2,oword [eax]
 vunpcklps ymm1,ymm2,yword [eax]
 vunpckhps ymm1,ymm2,yword [eax]
@@ -2137,7 +2131,6 @@ vsubps ymm1,ymm2,yword [eax]
 vminps ymm1,ymm2,yword [eax]
 vdivps ymm1,ymm2,yword [eax]
 vmaxps ymm1,ymm2,yword [eax]
-
 vunpcklpd ymm1,ymm2,yword [eax]
 vunpckhpd ymm1,ymm2,yword [eax]
 vandpd ymm1,ymm2,yword [eax]
@@ -2152,7 +2145,6 @@ vdivpd ymm1,ymm2,yword [eax]
 vmaxpd ymm1,ymm2,yword [eax]
 vhaddpd ymm1,ymm2,yword [eax]
 vhsubpd ymm1,ymm2,yword [eax]
-
 vaddsubpd ymm1,ymm2,yword [eax]
 vhaddps ymm1,ymm2,yword [eax]
 vhsubps ymm1,ymm2,yword [eax]
@@ -2171,7 +2163,6 @@ vsubps xmm1,xmm1,oword [eax]
 vminps xmm1,xmm1,oword [eax]
 vdivps xmm1,xmm1,oword [eax]
 vmaxps xmm1,xmm1,oword [eax]
-
 vmovlpd xmm1,xmm1,qword [eax]
 vunpcklpd xmm1,xmm1,oword [eax]
 vunpckhpd xmm1,xmm1,oword [eax]
@@ -2205,7 +2196,6 @@ vpcmpeqw xmm1,xmm1,oword [eax]
 vpcmpeqd xmm1,xmm1,oword [eax]
 vhaddpd xmm1,xmm1,oword [eax]
 vhsubpd xmm1,xmm1,oword [eax]
-
 vpinsrw xmm1,xmm1,word [eax],byte 0x5
 vaddsubpd xmm1,xmm1,oword [eax]
 vpsrlw xmm1,xmm1,oword [eax]
@@ -2259,7 +2249,6 @@ vsubss xmm1,xmm1,dword [eax]
 vminss xmm1,xmm1,dword [eax]
 vdivss xmm1,xmm1,dword [eax]
 vmaxss xmm1,xmm1,dword [eax]
-
 vcvtsi2sd xmm1,xmm1,dword [eax]
 vsqrtsd xmm1,xmm1,qword [eax]
 vaddsd xmm1,xmm1,qword [eax]
@@ -2533,9 +2522,6 @@ mov ds,[0x4]
 mov fs,ax
 mov gs,ax
 pop word [bx+si]
-
-
-
 vpmacssww xmm1,xmm4,xmm7,xmm3
 vpmacsswd xmm1,xmm4,xmm7,xmm3
 vpmacssdql xmm1,xmm4,xmm7,xmm3
@@ -2585,7 +2571,6 @@ vphaddbq xmm1,xmm2
 vphaddwd xmm1,xmm2
 vphaddwq xmm1,xmm2
 vphadddq xmm1,xmm2
-
 vphaddubd xmm1,xmm2
 vphaddubq xmm1,xmm2
 vphadduwd xmm1,xmm2
@@ -3178,8 +3163,6 @@ vdivps xmm1,xmm2,oword [bx+si]
 vdivps xmm1,xmm2,xmm3
 vmaxps xmm1,xmm2,oword [bx+si]
 vmaxps xmm1,xmm2,xmm3
-
-
 vmovlpd xmm1,xmm2,qword [bx+si]
 vunpcklpd xmm1,xmm2,oword [bx+si]
 vunpcklpd xmm1,xmm2,xmm3
@@ -3244,8 +3227,6 @@ vhaddpd xmm1,xmm2,oword [bx+si]
 vhaddpd xmm1,xmm2,xmm3
 vhsubpd xmm1,xmm2,oword [bx+si]
 vhsubpd xmm1,xmm2,xmm3
-
-
 vpinsrw xmm1,xmm2,word [bx+si],byte 0x5
 vpinsrw xmm1,xmm2,ax,byte 0x5
 vaddsubpd xmm1,xmm2,oword [bx+si]
@@ -3402,8 +3383,6 @@ vdivps ymm1,ymm2,yword [bx+si]
 vdivps ymm1,ymm2,ymm3
 vmaxps ymm1,ymm2,yword [bx+si]
 vmaxps ymm1,ymm2,ymm3
-
-
 vunpcklpd ymm1,ymm2,yword [bx+si]
 vunpcklpd ymm1,ymm2,ymm3
 vunpckhpd ymm1,ymm2,yword [bx+si]
@@ -3432,8 +3411,6 @@ vhaddpd ymm1,ymm2,yword [bx+si]
 vhaddpd ymm1,ymm2,ymm3
 vhsubpd ymm1,ymm2,yword [bx+si]
 vhsubpd ymm1,ymm2,ymm3
-
-
 vaddsubpd ymm1,ymm2,yword [bx+si]
 vaddsubpd ymm1,ymm2,ymm3
 vhaddps ymm1,ymm2,yword [bx+si]
@@ -3469,8 +3446,6 @@ vdivps xmm1,xmm1,oword [bx+si]
 vdivps xmm1,xmm1,xmm2
 vmaxps xmm1,xmm1,oword [bx+si]
 vmaxps xmm1,xmm1,xmm2
-
-
 vmovlpd xmm1,xmm1,qword [bx+si]
 vunpcklpd xmm1,xmm1,oword [bx+si]
 vunpcklpd xmm1,xmm1,xmm2
@@ -3535,8 +3510,6 @@ vhaddpd xmm1,xmm1,oword [bx+si]
 vhaddpd xmm1,xmm1,xmm2
 vhsubpd xmm1,xmm1,oword [bx+si]
 vhsubpd xmm1,xmm1,xmm2
-
-
 vpinsrw xmm1,xmm1,word [bx+si],byte 0x5
 vpinsrw xmm1,xmm1,ax,byte 0x5
 vaddsubpd xmm1,xmm1,oword [bx+si]
@@ -3733,7 +3706,6 @@ vcvttpd2dq xmm1,xmm2
 vmovntdq oword [bx+si],xmm1
 vmaskmovdqu xmm1,xmm2
 vmovss xmm1,qword [bx+si]
-
 vmovsldup xmm1,oword [bx+si]
 vmovsldup xmm1,xmm2
 vmovshdup xmm1,oword [bx+si]
@@ -3752,7 +3724,6 @@ vmovdqu oword [bx+si],xmm2
 vcvtdq2pd xmm1,qword [bx+si]
 vcvtdq2pd xmm1,xmm2
 vmovsd xmm1,qword [bx+si]
-
 vmovddup xmm1,qword [bx+si]
 vmovddup xmm1,xmm2
 vcvttsd2si eax,qword [bx+si]
@@ -4040,9 +4011,7 @@ fcomip st0
 loopne $+0x0f
 loope $+0x0f
 loop $
-
 jcxz $+0xc
-
 in al,0x37
 in al,0xff
 in ax,0x63
@@ -5811,7 +5780,6 @@ xor ax,[dword ebp+ecx*4+0x0]
 xor bx,[dword ebp+ecx*4+0x4]
 xor si,[dword ebp+ecx*4+0x8]
 xor di,[dword ebp+ecx*4+0xc]
-
 arpl [eax],ax
 lar eax,[eax]
 lsl eax,[eax]
@@ -6434,7 +6402,6 @@ vpcmpeqw xmm1,xmm2,oword [eax]
 vpcmpeqd xmm1,xmm2,oword [eax]
 vhaddpd xmm1,xmm2,oword [eax]
 vhsubpd xmm1,xmm2,oword [eax]
-
 vaddsubpd xmm1,xmm2,oword [eax]
 vpsrlw xmm1,xmm2,oword [eax]
 vpsrld xmm1,xmm2,oword [eax]
@@ -6511,7 +6478,6 @@ vsubps ymm1,ymm2,yword [eax]
 vminps ymm1,ymm2,yword [eax]
 vdivps ymm1,ymm2,yword [eax]
 vmaxps ymm1,ymm2,yword [eax]
-
 vunpcklpd ymm1,ymm2,yword [eax]
 vunpckhpd ymm1,ymm2,yword [eax]
 vandpd ymm1,ymm2,yword [eax]
@@ -6526,7 +6492,6 @@ vdivpd ymm1,ymm2,yword [eax]
 vmaxpd ymm1,ymm2,yword [eax]
 vhaddpd ymm1,ymm2,yword [eax]
 vhsubpd ymm1,ymm2,yword [eax]
-
 vaddsubpd ymm1,ymm2,yword [eax]
 vhaddps ymm1,ymm2,yword [eax]
 vhsubps ymm1,ymm2,yword [eax]
@@ -6545,7 +6510,6 @@ vsubps xmm1,xmm1,oword [eax]
 vminps xmm1,xmm1,oword [eax]
 vdivps xmm1,xmm1,oword [eax]
 vmaxps xmm1,xmm1,oword [eax]
-
 vmovlpd xmm1,xmm1,qword [eax]
 vunpcklpd xmm1,xmm1,oword [eax]
 vunpckhpd xmm1,xmm1,oword [eax]
@@ -6579,7 +6543,6 @@ vpcmpeqw xmm1,xmm1,oword [eax]
 vpcmpeqd xmm1,xmm1,oword [eax]
 vhaddpd xmm1,xmm1,oword [eax]
 vhsubpd xmm1,xmm1,oword [eax]
-
 vpinsrw xmm1,xmm1,word [eax],byte 0x5
 vaddsubpd xmm1,xmm1,oword [eax]
 vpsrlw xmm1,xmm1,oword [eax]
@@ -6633,7 +6596,6 @@ vsubss xmm1,xmm1,dword [eax]
 vminss xmm1,xmm1,dword [eax]
 vdivss xmm1,xmm1,dword [eax]
 vmaxss xmm1,xmm1,dword [eax]
-
 vcvtsi2sd xmm1,xmm1,dword [eax]
 vsqrtsd xmm1,xmm1,qword [eax]
 vaddsd xmm1,xmm1,qword [eax]
@@ -6645,7 +6607,6 @@ vdivsd xmm1,xmm1,qword [eax]
 vmaxsd xmm1,xmm1,qword [eax]
 vhaddps xmm1,xmm1,oword [eax]
 vhsubps xmm1,xmm1,oword [eax]
-
 vaddsubps xmm1,xmm1,oword [eax]
 vmovups xmm1,oword [eax]
 vmovups oword [eax],xmm2
@@ -6733,7 +6694,6 @@ vmovddup ymm1,yword [eax]
 vcvtpd2dq xmm1,yword [eax]
 vldqqu ymm1,yword [eax]
 jecxz $+0xc
-
 movsd xmm1,[eax]
 movsd xmm1,[ebx]
 movsd [eax],xmm2
@@ -6909,9 +6869,6 @@ mov ds,[0x4]
 mov fs,ax
 mov gs,ax
 pop word [bx+si]
-
-
-
 vpmacssww xmm1,xmm4,xmm7,xmm3
 vpmacsswd xmm1,xmm4,xmm7,xmm3
 vpmacssdql xmm1,xmm4,xmm7,xmm3
@@ -6961,7 +6918,6 @@ vphaddbq xmm1,xmm2
 vphaddwd xmm1,xmm2
 vphaddwq xmm1,xmm2
 vphadddq xmm1,xmm2
-
 vphaddubd xmm1,xmm2
 vphaddubq xmm1,xmm2
 vphadduwd xmm1,xmm2
@@ -7554,8 +7510,6 @@ vdivps xmm1,xmm2,oword [bx+si]
 vdivps xmm1,xmm2,xmm3
 vmaxps xmm1,xmm2,oword [bx+si]
 vmaxps xmm1,xmm2,xmm3
-
-
 vmovlpd xmm1,xmm2,qword [bx+si]
 vunpcklpd xmm1,xmm2,oword [bx+si]
 vunpcklpd xmm1,xmm2,xmm3
@@ -7620,8 +7574,6 @@ vhaddpd xmm1,xmm2,oword [bx+si]
 vhaddpd xmm1,xmm2,xmm3
 vhsubpd xmm1,xmm2,oword [bx+si]
 vhsubpd xmm1,xmm2,xmm3
-
-
 vpinsrw xmm1,xmm2,word [bx+si],byte 0x5
 vpinsrw xmm1,xmm2,ax,byte 0x5
 vaddsubpd xmm1,xmm2,oword [bx+si]
@@ -7729,8 +7681,6 @@ vdivss xmm1,xmm2,dword [bx+si]
 vdivss xmm1,xmm2,xmm3
 vmaxss xmm1,xmm2,dword [bx+si]
 vmaxss xmm1,xmm2,xmm3
-
-
 vmovsd xmm1,xmm2,xmm3
 vcvtsi2sd xmm1,xmm2,dword [bx+si]
 vcvtsi2sd xmm1,xmm2,eax
@@ -7754,8 +7704,6 @@ vhaddps xmm1,xmm2,oword [bx+si]
 vhaddps xmm1,xmm2,xmm3
 vhsubps xmm1,xmm2,oword [bx+si]
 vhsubps xmm1,xmm2,xmm3
-
-
 vaddsubps xmm1,xmm2,oword [bx+si]
 vaddsubps xmm1,xmm2,xmm3
 vunpcklps ymm1,ymm2,yword [bx+si]
@@ -7782,8 +7730,6 @@ vdivps ymm1,ymm2,yword [bx+si]
 vdivps ymm1,ymm2,ymm3
 vmaxps ymm1,ymm2,yword [bx+si]
 vmaxps ymm1,ymm2,ymm3
-
-
 vunpcklpd ymm1,ymm2,yword [bx+si]
 vunpcklpd ymm1,ymm2,ymm3
 vunpckhpd ymm1,ymm2,yword [bx+si]
@@ -7812,8 +7758,6 @@ vhaddpd ymm1,ymm2,yword [bx+si]
 vhaddpd ymm1,ymm2,ymm3
 vhsubpd ymm1,ymm2,yword [bx+si]
 vhsubpd ymm1,ymm2,ymm3
-
-
 vaddsubpd ymm1,ymm2,yword [bx+si]
 vaddsubpd ymm1,ymm2,ymm3
 vhaddps ymm1,ymm2,yword [bx+si]
@@ -7849,8 +7793,6 @@ vdivps xmm1,xmm1,oword [bx+si]
 vdivps xmm1,xmm1,xmm2
 vmaxps xmm1,xmm1,oword [bx+si]
 vmaxps xmm1,xmm1,xmm2
-
-
 vmovlpd xmm1,xmm1,qword [bx+si]
 vunpcklpd xmm1,xmm1,oword [bx+si]
 vunpcklpd xmm1,xmm1,xmm2
@@ -7915,8 +7857,6 @@ vhaddpd xmm1,xmm1,oword [bx+si]
 vhaddpd xmm1,xmm1,xmm2
 vhsubpd xmm1,xmm1,oword [bx+si]
 vhsubpd xmm1,xmm1,xmm2
-
-
 vpinsrw xmm1,xmm1,word [bx+si],byte 0x5
 vpinsrw xmm1,xmm1,ax,byte 0x5
 vaddsubpd xmm1,xmm1,oword [bx+si]
@@ -8024,9 +7964,7 @@ vdivss xmm1,xmm1,dword [bx+si]
 vdivss xmm1,xmm1,xmm2
 vmaxss xmm1,xmm1,dword [bx+si]
 vmaxss xmm1,xmm1,xmm2
-
 vcmpeq_osss xmm1,xmm1,xmm2
-
 vmovsd xmm1,xmm1,xmm2
 vcvtsi2sd xmm1,xmm1,dword [bx+si]
 vcvtsi2sd xmm1,xmm1,eax
@@ -8050,8 +7988,6 @@ vhaddps xmm1,xmm1,oword [bx+si]
 vhaddps xmm1,xmm1,xmm2
 vhsubps xmm1,xmm1,oword [bx+si]
 vhsubps xmm1,xmm1,xmm2
-
-
 vaddsubps xmm1,xmm1,oword [bx+si]
 vaddsubps xmm1,xmm1,xmm2
 vmovups xmm1,oword [bx+si]
@@ -8117,7 +8053,6 @@ vcvttpd2dq xmm1,xmm2
 vmovntdq oword [bx+si],xmm1
 vmaskmovdqu xmm1,xmm2
 vmovss xmm1,qword [bx+si]
-
 vmovsldup xmm1,oword [bx+si]
 vmovsldup xmm1,xmm2
 vmovshdup xmm1,oword [bx+si]
@@ -8136,7 +8071,6 @@ vmovdqu oword [bx+si],xmm2
 vcvtdq2pd xmm1,qword [bx+si]
 vcvtdq2pd xmm1,xmm2
 vmovsd xmm1,qword [bx+si]
-
 vmovddup xmm1,qword [bx+si]
 vmovddup xmm1,xmm2
 vcvttsd2si eax,qword [bx+si]
@@ -8424,9 +8358,7 @@ fcomip st0
 loopne $+0xa
 loope $+0xb
 loop $+0x2
-
 jcxz $+0xf
-
 in al,0x37
 in al,0xff
 in ax,0x63
@@ -8440,7 +8372,6 @@ out 0xff,ax
 call word 0xfff3
 jmp word 0xffe5
 jmp word 0x1234:0x9abc
-
 in al,dx
 in ax,dx
 out dx,al

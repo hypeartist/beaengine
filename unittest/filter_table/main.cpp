@@ -19,6 +19,7 @@ extern "C" {
 
 #include "unittest/util/table_reader.hpp"
 #include "unittest/util/bytes_io.hpp"
+#include "unittest/util/my_snprintf.h"
 
 static void ndisasm_verror(int severity, const char *fmt, va_list va)
 {
@@ -31,13 +32,22 @@ static void ndisasm_verror(int severity, const char *fmt, va_list va)
 bool do_dasm (const table_item_c& ti, 
 	      std::string& new_mnemonics, 
 	      struct insn& ins,
-	      int& bits)
+	      int& bits,
+	      int bits_mode)
 {
   unsigned char* q = ti.bytes ();
   size_t qlen = ti.length ();
   char outbuf [128];
   
-  bits = 16;
+  if (bits_mode == 0)
+    {
+      bits = 16;
+    }
+  else
+    {
+      bits = bits_mode;
+    }
+
   unsigned int lendis = 0;
   int offset = 0;
   bool autosync = false;
@@ -58,6 +68,13 @@ bool do_dasm (const table_item_c& ti,
 	{
 	  parsed = true;
 	  break;
+	}
+      if (bits_mode != 0)
+	{
+	  char ebuff [1024];
+	  my_snprintf (ebuff, 1024, "Inconsistent bits mode for line %d",
+		       ti.line_number ());
+	  throw std::runtime_error (ebuff);
 	}
       if (bits == 64)
 	{
@@ -87,11 +104,30 @@ typedef std::map <opcode, std::list <opc_s*>* > opc_dict_t;
 // -------------------------------------------------------------
 int main (int argc, char* argv [])
 {
-  if (argc != 2)
+  if (argc > 3 || argc == 1)
     {
-      std::cerr << "USAGE: " << argv [0] << " <table.dasm>" << std::endl;
+      std::cerr << "USAGE: " << argv [0] << " <table.dasm> [bits]" 
+		<< std::endl;
       return 1;
     }
+  
+  const char* fname = argv [1];
+  int bits_mode = 0;
+  if (argc == 3)
+    {
+      bits_mode = atoi (argv [2]);
+      switch (bits_mode)
+	{
+	case 16:
+	case 32:
+	case 64:
+	  break;
+	default:
+	  std::cerr << "Unknown bits mode " << argv [2] << std::endl;
+	  return 1;
+	}
+    }
+  
   try
     {
       tolower_init();
@@ -100,7 +136,7 @@ int main (int argc, char* argv [])
       
       init_sync();
   
-      table_reader_c tbl (argv [1]);
+      table_reader_c tbl (fname);
       const size_t items = tbl.items ();
       opc_set_t opc_set;
       opc_dict_t opc_dict;
@@ -111,7 +147,7 @@ int main (int argc, char* argv [])
 	  std::string opcode;
 	  int bits;
 	  struct insn* instruction = new insn;
-	  if (do_dasm (ti, opcode, *instruction, bits))
+	  if (do_dasm (ti, opcode, *instruction, bits, bits_mode))
 	    {
 	      const std::string bytes = 
 		print_bytes_array (ti.bytes (), ti.length ());
